@@ -89,6 +89,119 @@ Pod
 - This keeps tightly coupled containers running together.
 - It simplifies application deployment and management.
 
+### 2. Containers Can Share Networking
+
+Containers inside the same Pod share the **Pod's network namespace**.
+
+#### Example
+
+```text
+Pod IP: 10.244.1.10
+
+┌─────────────────────────────┐
+│            Pod              │
+│                             │
+│ App Container     Sidecar   │
+│ Port 8080         Port 9000 │
+│       │               │     │
+│       └── localhost ──┘     │
+└─────────────────────────────┘
+```
+
+The containers communicate using **`localhost`** because they share the same network namespace.
+
+**Example**
+
+```text
+App → localhost:9000 → Sidecar
+```
+
+**Key Points**
+
+- All containers share the same **Pod IP address**.
+- Containers communicate using `localhost`.
+- Different containers can expose different ports.
+- Internal communication does not require a Service.
+
+---
+
+### 3. Pods Allow Shared Storage
+
+Multiple containers in a Pod can mount the same Kubernetes volume.
+
+```text
+             Pod
+              │
+       ┌──────┴──────┐
+       ▼             ▼
+   App Container  Sidecar
+       │             │
+       └──────┬──────┘
+              ▼
+         Shared Volume
+```
+
+This is useful when one container produces data and another container processes or collects it.
+
+**Key Points**
+
+- Containers can mount the same volume.
+- Data written by one container is available to another.
+- Commonly used for logs, shared files, and temporary data.
+- Volumes remain available for the lifetime of the Pod.
+
+---
+
+### 4. Pods Support the Sidecar Pattern
+
+Pods allow **closely coupled containers** to work together.
+
+#### Example
+
+```text
+Pod
+│
+├── Application
+│     └── Runs business application
+│
+└── Logging Sidecar
+      └── Collects application logs
+```
+
+Both containers share the same lifecycle and are deployed together.
+
+**Key Points**
+
+- The main container runs the application.
+- The sidecar provides supporting functionality.
+- Both containers start and stop together.
+- Common sidecars handle logging, monitoring, and proxy services.
+
+---
+
+### 5. Pods Provide an Abstraction Above Containers
+
+Kubernetes manages **Pods**, not individual containers.
+
+```text
+Kubernetes
+    │
+    ▼
+   Pod
+    │
+    ├── Container
+    └── Container
+```
+
+A Pod acts as a **logical application unit** that groups one or more containers together.
+
+**Key Points**
+
+- Kubernetes schedules Pods instead of individual containers.
+- A Pod can contain one or multiple containers.
+- Containers inside a Pod share networking and storage.
+- This abstraction simplifies application deployment and management.
+
 
 
 
