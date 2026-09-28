@@ -709,4 +709,23 @@ Select Worker Node
 Kubelet
    │
    ▼
+Container Runtime
+   │
+   ▼
+Pull nginx image
+   │
+   ▼
+Create container
+   │
+   ▼
+Configure Pod network
+   │
+   ▼
+Mount volume
+   │
+   ▼
+Start NGINX
+   │
+   ▼
+Pod → Running
 ```
