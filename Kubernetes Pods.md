@@ -202,7 +202,15 @@ A Pod acts as a **logical application unit** that groups one or more containers 
 - Containers inside a Pod share networking and storage.
 - This abstraction simplifies application deployment and management.
 
+## Pod Architecture
 
+- **A Pod is a Kubernetes abstraction** that runs on a single Kubernetes node and contains one or more containers.
+
+- **All containers inside a Pod share the Pod's network namespace** and can also share mounted volumes for storage.
+
+- **Kubernetes schedules the entire Pod as one unit**, while the kubelet and container runtime create and manage its containers on the selected node.
+
+- **A Pod can contain one application container or multiple tightly coupled containers**, such as an application and a sidecar container.
 
 
 
